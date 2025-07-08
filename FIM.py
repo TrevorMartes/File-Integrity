@@ -28,7 +28,7 @@ def baseline(filepath):
         print('\nYour file has been uploaded to the Baseline!')
         print(f'\nOriginal string: {filepath}\nEncoded string (bytes): {encoded_filepath}\nSHA256 hash: {hex_digest}')
     elif filepath in baseline_dic:
-        print('\nThis file is already in the baseline!\n')
+        print('\nThis file is already in the baseline! Cheking integrity now...')
         check_integrity(filepath)
             
     #print(baseline_dic) #will remove/ want to have it saved to an encrypted database if possible
@@ -49,9 +49,12 @@ def check_integrity(filepath):
     else:
         print('\nFile not found in baseline dictionary!')
 
-menu = input('\nWould you like to: A. Add this files hash to the baseline? or B. Check this files integrity?\n')
+def menu():
+    menu = input('\nWould you like to: A. Add this files hash to the baseline? or B. Check this files integrity?\n')
 
-if menu == 'A' or menu == 'a':
-    baseline(filepath)
-elif menu == 'B' or menu == 'b':
-    check_integrity(filepath)
+    if menu == 'A' or menu == 'a':
+        baseline(filepath)
+    elif menu == 'B' or menu == 'b':
+        check_integrity(filepath)
+
+menu()
