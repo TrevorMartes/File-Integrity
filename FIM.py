@@ -5,8 +5,7 @@ print('Welcome to the Simple File Ingrity Monitor!')
 
 time.sleep(1)
 
-filepath = input('What file(s) are we monitoring? *please use the filepath ie. ~/home/user/Documents\n\n') #Need the actual file input to be fuctional
-# baseline_dic = {'FIM.py': 'd79451ce22f324fe6de47301050ca98d7ad79e3b42c6a16c617a5dcce1aaf625'} #Example hash  *Move to database for security or like the shadow file?
+filepath = input('What file(s) are we monitoring? *please use the file name ie. FIM.py\n\n') 
 
 # Initializing sqlite db 
 with sqlite3.connect('FIM.db') as connection:
@@ -59,19 +58,31 @@ def baseline(filepath):
 
 #comparing baseline to the current hash
 def check_integrity(filepath):
-    encoded_filepath = filepath.encode('utf-8')
+    try:
+        with open(filepath, 'r') as file:
+        # Read the entire content of the file as a single string
+            content = file.read()
+    except FileNotFoundError:
+        print(f'\nThe file {filepath} does not exist.')
+        sys.exit()
+
+    encoded_filepath = content.encode('utf-8')
     hasher = hashlib.sha256()
     hasher.update(encoded_filepath)
     new_hex_digest = hasher.hexdigest()
+    
+    # Selects the file and hash from the database that matches the file given by the user
+    cursor.execute('SELECT * FROM File_Integrity WHERE file = ?',(filepath,))
+    integ_check = cursor.fetchall()[0]
 
-    #compares the current hash to the baseline stored in the dictionary 
-    if filepath in baseline_dic:
-        if new_hex_digest == baseline_dic[filepath]:
-            print('\nThis file has not been changed!')
-        else:
-            print('\nWARNING: File has been changed *Integrity may be compromised!')
-    else:
-        print('\nFile not found in baseline dictionary!')
+    # Checks Hash in DB to the current hash to determine changes 
+    if integ_check[1] == new_hex_digest:
+        print(f'\nThe file {filepath} has not been changed!')
+    elif integ_check[1] != new_hex_digest:
+        print(f'\nWARNING: The file {filepath} has been changed *Integrity may be compromised!')
+        print(f'\nCurrent Hash: {new_hex_digest} \nBaseline Hash: {integ_check[1]}')
+
+    connection.commit()
 
 def menu():
     menu = input('\nWould you like to: A. Add this files hash to the baseline? or B. Check this files integrity?\n')
