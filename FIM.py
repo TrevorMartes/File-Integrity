@@ -52,7 +52,8 @@ def baseline(filepath):
                 check_integrity(filepath)
                 update = input('Would you like to update the baseline?\n') 
                 if update == 'Yes' or update == 'yes':
-                    connection.commit()  # Commit the changes if insertion was successful
+                    cursor.execute(f'UPDATE File_Integrity SET hash = ? WHERE file = ?',(hex_digest,filepath))
+                    connection.commit()
                     print(f"Your file: '{filepath}:{hex_digest}' was updated successfully into the FIM database.")
             else:
                 connection.commit()  # Commit the changes if insertion was successful
