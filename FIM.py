@@ -48,7 +48,12 @@ def baseline(filepath):
                 INSERT OR IGNORE INTO File_Integrity (file, hash) VALUES (?, ?)''',(filepath,hex_digest))
 
             if cursor.rowcount == 0:
-                print(f"Your file: '{filepath}' already exists in the FIM database.") 
+                print(f"\nYour file '{filepath}' already exists in the FIM database.")
+                check_integrity(filepath)
+                update = input('Would you like to update the baseline?\n') 
+                if update == 'Yes' or update == 'yes':
+                    connection.commit()  # Commit the changes if insertion was successful
+                    print(f"Your file: '{filepath}:{hex_digest}' was updated successfully into the FIM database.")
             else:
                 connection.commit()  # Commit the changes if insertion was successful
                 print(f"Your file: '{filepath}:{hex_digest}' was inserted successfully into the FIM database.")
