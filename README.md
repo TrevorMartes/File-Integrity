@@ -35,19 +35,28 @@ You’ll be prompted to:
 
 ```bash
 # First scan (file added to DB)
-python run.py scan myfile.txt
+python run.py scan path/to/file.txt
+# Output: Baseline created or updated for (filepath).
 
 # Second scan (same file, unchanged)
-python run.py scan myfile.txt
-# Output: File is unchanged. Baseline already exists.
+python run.py scan path/to/file.txt
+# Output: Baseline for (filepath) already exists. File is unchanged.
 
 # Third scan (file modified)
-python run.py scan myfile.txt
+python run.py scan path/to/file.txt
 # Output: File already exists with different hash. Use --force to update baseline.
 
 # Update it
-python run.py scan myfile.txt --force
-# Output: Baseline hash saved.
+python run.py scan path/to/file.txt --force
+# Output: Baseline created or updated for (filepath).
+
+# Check Integrity (same hash)
+python run.py check path/to/file.txt
+# Output: No changes have been made to the file (filepath).
+
+# Check Integrity (different hash)
+python run.py check path/to/file.txt
+# Output: WARNING: The file {filepath} has been changed *Integrity may be compromised!
 ```
 
 *(This feature is currently under development but will be included in the repo.)*
