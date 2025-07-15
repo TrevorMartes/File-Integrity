@@ -105,7 +105,7 @@ For the CLI (coming soon):
 ## 📁 Roadmap
 
 * [x] Interactive script for baseline and integrity check
-* [ ] CLI support via `run.py` and `typer`
+* [x] CLI support via `run.py` and `typer`
 * [ ] Directory scanning
 * [ ] File monitoring over time
 * [ ] Alert system (email/log)
