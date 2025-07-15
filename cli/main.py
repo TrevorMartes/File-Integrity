@@ -7,11 +7,11 @@ app = typer.Typer()
 def scan(filepath:str):
     # Hash and store the value from a file in the db 
     hash_value = baseline(filepath)
-    typer.echo(f'Baseline hash saved:{filepath}:{hash_value}')
+    typer.echo(hash_value)
 
 @app.command()
 def check(filepath:str):
-    # Checks integrity of a file if stored on 
+    # Checks integrity of a file if stored on db
     result = check_integrity(filepath)
     typer.echo(result)
 
