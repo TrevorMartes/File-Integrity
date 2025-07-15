@@ -34,8 +34,20 @@ You’ll be prompted to:
 ### Option 2: Use the CLI Tool (In Progress)
 
 ```bash
-python run.py -scan <file_name>      # Adds file to the hash baseline
-python run.py -check <file_name>     # Checks the file's integrity
+# First scan (file added to DB)
+python run.py scan myfile.txt
+
+# Second scan (same file, unchanged)
+python run.py scan myfile.txt
+# Output: File is unchanged. Baseline already exists.
+
+# Third scan (file modified)
+python run.py scan myfile.txt
+# Output: File already exists with different hash. Use --force to update baseline.
+
+# Update it
+python run.py scan myfile.txt --force
+# Output: Baseline hash saved.
 ```
 
 *(This feature is currently under development but will be included in the repo.)*
