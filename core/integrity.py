@@ -25,7 +25,7 @@ def baseline(filepath, force=False):
             return 'File already exists with a different hash. Use --force to update the baseline.'
     else:
         save_file_hash(filepath, file_hash) 
-        return (f'Baseline created or updated for {filepath}. Hash: {file_hash}')
+        return (f'Baseline created or updated for {filepath}.')
 
 def check_integrity(filepath):
     current_hash = hash_file(filepath)
@@ -33,7 +33,6 @@ def check_integrity(filepath):
     if stored_hash is None:
         return (f"This file {filepath} does not exist in the Baseline. Please run baseline first.")
     elif current_hash != stored_hash:
-        return (f"WARNING: The file {filepath} has been changed *Integrity may be compromised! * Current hash: {current_hash}, Stored hash: {stored_hash}")
+        return (f"WARNING: The file {filepath} has been changed *Integrity may be compromised!")
     else:
-        return (f"No changes have been made to the file {filepath}:{stored_hash}.")
-
+        return (f"No changes have been made to the file {filepath}.")
