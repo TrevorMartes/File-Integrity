@@ -1,4 +1,3 @@
-
 # FIM (File Integrity Monitor)
 
 FIM is a lightweight Python-based File Integrity Monitoring tool that helps track changes in file contents by storing file hashes and checking for modifications. Whether you're verifying file authenticity or tracking unauthorized changes, FIM is a simple and effective tool to add to your security toolkit.
@@ -65,7 +64,7 @@ python run.py check path/to/file.txt
 
 ## 📦 Dependencies
 
-For the CLI (coming soon):
+For the CLI:
 
 * `typer` (Install with `pip install typer[all]`)
 
@@ -77,7 +76,6 @@ For the CLI (coming soon):
 
    ```bash
    git clone https://github.com/TrevorMartes/File-Integrity.git
-   cd FIM
    ```
 
 2. Ensure you have Python 3.x installed:
